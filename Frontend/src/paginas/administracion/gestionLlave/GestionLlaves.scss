@@ -1,0 +1,106 @@
+/*
+GestionLlaves.scss
+Usa el sistema de diseño global: _variables.scss y global.scss
+*/
+@use '../../../../estilos/variables' as *;
+
+// Utilidades locales para esta página
+.cabecera-pagina {
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $espacio-4;
+  }
+}
+
+// Botón "Nueva Llave" (Sigue siendo específico por su degradado y sombra)
+.btn-primario {
+  flex-shrink: 0;
+  height: 46px;
+  padding: 0 $espacio-6;
+  background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+  color: $color-texto-blanco;
+  border: none;
+  border-radius: $radio-md;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-base;
+  font-weight: $peso-negrita;
+  display: flex;
+  align-items: center;
+  gap: $espacio-2;
+  cursor: pointer;
+  box-shadow: $sombra-btn-azul;
+  transition: $transicion-resorte;
+  white-space: nowrap;
+
+  span.material-symbols-outlined { font-size: 20px; }
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: $sombra-btn-azul-activo;
+  }
+}
+
+// Botones editar / eliminar / imprimir
+.celda-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: $espacio-2;
+
+  button {
+    width: 34px;
+    height: 34px;
+    border-radius: $radio-sm;
+    border: 1.5px solid $color-borde-defecto;
+    background: $color-fondo-superficie;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transicion-base;
+
+    span.material-symbols-outlined { font-size: 18px; }
+
+    &.btn-imprimir {
+      color: $color-purple-600;
+      &:hover {
+        background: $color-purple-100;
+        border-color: $color-purple-200;
+        transform: scale(1.08);
+      }
+    }
+
+    &.btn-editar {
+      color: $color-blue-700;
+      &:hover {
+        background: $color-blue-100;
+        border-color: $color-blue-200;
+        transform: scale(1.08);
+      }
+    }
+
+    &.btn-eliminar {
+      width: 28px;
+      height: 28px;
+      color: $color-red-600;
+      span.material-symbols-outlined { font-size: 16px; }
+      &:hover {
+        background: $color-red-100;
+        border-color: $color-red-200;
+        transform: scale(1.08);
+      }
+    }
+  }
+}
+
+/*
+Nota: .etiqueta-codigo-barras, .estado-cargando, .estado-vacio, .paginacion
+están definidas en global.scss y no se repiten aquí.
+*/

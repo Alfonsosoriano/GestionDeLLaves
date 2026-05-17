@@ -1,0 +1,304 @@
+
+@use '../../../estilos/variables' as *;
+
+* { font-family: $fuente-base; }
+
+
+// Contenedor principal
+.contenedor-configuracion {
+  display: flex;
+  justify-content: center;
+  padding: $espacio-5 0;
+  animation: cfgFadeIn 0.4s ease-out;
+}
+
+
+// Tarjeta principal
+.tarjeta-configuracion {
+  background: $color-fondo-superficie;
+  width: 100%;
+  max-width: 620px;
+  border-radius: $radio-xl;
+  border: 1px solid $color-borde-claro;
+  box-shadow: $sombra-tarjeta;
+  overflow: hidden;
+
+
+  // â”€â”€ Cabecera de la tarjeta â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  .cabecera-configuracion {
+    background: $color-fondo-sutil;
+    padding: $espacio-8;
+    display: flex;
+    align-items: center;
+    gap: $espacio-5;
+    border-bottom: 1px solid $color-borde-defecto;
+
+    .icono-ajustes {
+      font-size: 44px;
+      color: $color-blue-700;
+      background: $color-blue-100;
+      border: 1px solid $color-blue-200;
+      padding: $espacio-3;
+      border-radius: $radio-lg;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: $tam-fuente-xl;
+      font-weight: $peso-negro;
+      color: $color-texto-titulo;
+      letter-spacing: $espaciado-letra-ajustado;
+    }
+
+    p {
+      margin: $espacio-1 0 0;
+      color: $color-texto-atenuado;
+      font-size: $tam-fuente-sm;
+    }
+  }
+
+
+  // â”€â”€ Estado de carga â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  .estado-cargando-config {
+    padding: $espacio-10 $espacio-8;
+    text-align: center;
+    font-size: $tam-fuente-md;
+    color: $color-texto-atenuado;
+    font-weight: $peso-negrita;
+  }
+
+
+  // â”€â”€ Formulario â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  .formulario-configuracion {
+    padding: $espacio-8;
+    display: flex;
+    flex-direction: column;
+    gap: $espacio-6;
+
+    .grupo-formulario {
+      display: flex;
+      flex-direction: column;
+      gap: $espacio-2 + 2px;
+
+      label {
+        font-size: $tam-fuente-sm;
+        font-weight: $peso-negrita;
+        color: $color-texto-cuerpo;
+        text-transform: uppercase;
+        letter-spacing: $espaciado-letra-amplio;
+      }
+
+      // Input con icono interior
+      .campo-con-icono {
+        position: relative;
+
+        span.material-symbols-outlined {
+          position: absolute;
+          left: $espacio-4;
+          top: 50%;
+          transform: translateY(-50%);
+          color: $color-texto-suave;
+          font-size: 22px;
+          pointer-events: none;
+          transition: $transicion-rapida;
+        }
+
+        input {
+          width: 100%;
+          padding: 14px $espacio-4 14px 52px;
+          border: 1.5px solid $color-borde-defecto;
+          border-radius: $radio-md;
+          font-size: $tam-fuente-base;
+          font-family: $fuente-base;
+          color: $color-texto-cuerpo;
+          background: $color-fondo-sutil;
+          outline: none;
+          box-sizing: border-box;
+          transition: $transicion-base;
+
+          &::placeholder { color: $color-texto-suave; }
+
+          &:focus {
+            border-color: $color-blue-600;
+            background: $color-fondo-superficie;
+            box-shadow: 0 0 0 4px rgba(26, 116, 204, 0.10);
+
+            // El icono se colorea al enfocar
+            ~ span.material-symbols-outlined,
+            & + span.material-symbols-outlined { color: $color-blue-600; }
+          }
+
+          // Hack: el icono estÃ¡ antes en el DOM, usamos el padre
+          &:focus-within span { color: $color-blue-600; }
+        }
+
+        // Icono reactivo al foco (el span estÃ¡ ANTES del input en el DOM)
+        &:focus-within span.material-symbols-outlined {
+          color: $color-blue-600;
+        }
+      }
+
+      .ayuda-campo {
+        font-size: $tam-fuente-xs;
+        color: $color-texto-atenuado;
+        margin: 0;
+        line-height: $altura-linea-normal;
+      }
+
+      // Opciones de tamaÃ±o con radio buttons
+      .opciones-tamano-barcode {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: $espacio-3;
+        margin-top: $espacio-3;
+
+        .opcion-tamano-radio {
+          display: flex;
+          align-items: center;
+          gap: $espacio-2;
+          padding: $espacio-3 $espacio-4;
+          border: 1.5px solid $color-borde-defecto;
+          border-radius: $radio-md;
+          cursor: pointer;
+          transition: all $transicion-base;
+          background: $color-fondo-sutil;
+
+          &:hover {
+            border-color: $color-blue-200;
+            background: #f0f7ff;
+          }
+
+          input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: $color-blue-600;
+            flex-shrink: 0;
+          }
+
+          .label-opcion {
+            display: flex;
+            align-items: center;
+            gap: $espacio-2;
+            font-size: $tam-fuente-base;
+            font-weight: $peso-negrita;
+            color: $color-texto-cuerpo;
+            cursor: pointer;
+            user-select: none;
+
+            span.material-symbols-outlined {
+              font-size: 20px;
+              color: $color-texto-suave;
+            }
+          }
+
+          // Cuando estÃ¡ seleccionado
+          input[type="radio"]:checked ~ .label-opcion {
+            color: $color-blue-700;
+
+            span.material-symbols-outlined {
+              color: $color-blue-600;
+            }
+          }
+
+          // Cuando estÃ¡ seleccionado, cambiar borde y fondo
+          input[type="radio"]:checked {
+            ~ .label-opcion { color: $color-blue-700; }
+          }
+
+          &:has(input[type="radio"]:checked) {
+            border-color: $color-blue-600;
+            background: $color-blue-50;
+            box-shadow: 0 0 0 3px rgba(26, 116, 204, 0.10);
+          }
+        }
+      }
+    }
+  }
+
+
+  // â”€â”€ Acciones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  .acciones-configuracion {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: $espacio-2;
+
+    .btn-guardar {
+      display: inline-flex;
+      align-items: center;
+      gap: $espacio-2 + 2px;
+      padding: 13px $espacio-7;
+      background: linear-gradient(145deg, $color-blue-700, $color-blue-600);
+      color: $color-texto-blanco;
+      border: none;
+      border-radius: $radio-md;
+      font-family: $fuente-base;
+      font-weight: $peso-negrita;
+      font-size: $tam-fuente-base;
+      cursor: pointer;
+      box-shadow: $sombra-btn-azul;
+      transition: $transicion-resorte;
+
+      span.material-symbols-outlined { font-size: 20px; }
+
+      &:hover:not(:disabled) {
+        filter: brightness(1.08);
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: $sombra-btn-azul-activo;
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0) scale(0.99);
+        box-shadow: $sombra-btn-azul;
+      }
+
+      &:disabled {
+        opacity: 0.60;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      // AnimaciÃ³n del icono de carga
+      .spin { animation: cfgSpin 1.2s linear infinite; }
+    }
+  }
+}
+
+
+// Banner de mensaje (Ã©xito / error)
+.message-banner {
+  display: flex;
+  align-items: center;
+  gap: $espacio-3;
+  padding: $espacio-4;
+  border-radius: $radio-md;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+
+  &.success {
+    background: $color-green-100;
+    color: $color-green-800;
+    border: 1px solid $color-green-200;
+  }
+
+  &.error {
+    background: $color-red-100;
+    color: $color-red-700;
+    border: 1px solid $color-red-200;
+  }
+}
+
+
+// Animaciones
+@keyframes cfgSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes cfgFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

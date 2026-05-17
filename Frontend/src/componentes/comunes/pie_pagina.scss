@@ -1,0 +1,38 @@
+
+@use '../../../estilos/variables' as *;
+
+.pie-pagina-app {
+  background: rgba(214, 222, 234, 0.92);
+  border-top: 1px solid $color-borde-defecto;
+  padding: 0 40px;
+  height: 52px;
+  margin-top: auto;
+
+  .contenido-pie {
+    max-width: $bp-2xl;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-family: $fuente-base;
+      font-size: $tam-fuente-sm;
+      color: $color-texto-atenuado;
+      margin: 0;
+    }
+  }
+
+  .etiqueta-pie {
+    font-family: $fuente-base;
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    background: $color-fondo-sutil;
+    border: 1px solid $color-borde-defecto;
+    padding: 4px 14px;
+    border-radius: $radio-redondo;
+    letter-spacing: 0.3px;
+  }
+}

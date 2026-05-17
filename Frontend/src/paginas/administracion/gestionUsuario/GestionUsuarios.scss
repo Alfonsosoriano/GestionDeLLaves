@@ -1,0 +1,57 @@
+
+@use '../../../../estilos/variables' as *;
+
+.btn-nuevo-usuario {
+  height: 46px;
+  padding: 0 $espacio-6;
+  background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+  color: $color-texto-blanco;
+  border: none;
+  border-radius: $radio-md;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-base;
+  font-weight: $peso-negrita;
+  display: flex;
+  align-items: center;
+  gap: $espacio-2;
+  cursor: pointer;
+  box-shadow: $sombra-btn-azul;
+  transition: $transicion-resorte;
+  white-space: nowrap;
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+}
+
+// Botones de acción de tabla 
+.celda-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: $espacio-2;
+
+  button {
+    width: 34px;
+    height: 34px;
+    border-radius: $radio-sm;
+    border: 1.5px solid $color-borde-defecto;
+    background: $color-fondo-superficie;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transicion-base;
+
+    span.material-symbols-outlined { font-size: 18px; }
+
+    &.btn-imprimir  { color: $color-purple-600; &:hover { background: $color-purple-100; border-color: $color-purple-200; transform: scale(1.1); } }
+    &.btn-editar   { color: $color-blue-700;   &:hover { background: $color-blue-100;   border-color: $color-blue-200;   transform: scale(1.1); } }
+    &.btn-eliminar { color: $color-red-600;    &:hover { background: $color-red-100;    border-color: $color-red-200;    transform: scale(1.1); } }
+  }
+}
+
+.espacio-accion {
+  width: 34px;
+  height: 34px;
+}

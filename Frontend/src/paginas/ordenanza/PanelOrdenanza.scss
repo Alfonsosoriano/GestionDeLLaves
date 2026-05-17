@@ -1,0 +1,450 @@
+
+@use '../../../estilos/variables' as *;
+
+* {
+  font-family: $fuente-base;
+}
+
+
+.po-main-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: $bp-2xl;
+  margin: 0 auto;
+}
+
+
+.cuadricula-panel-ordenanza {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $espacio-4;
+  padding-bottom: $espacio-7;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    grid-column: 1 / -1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      $color-divisor-inicio 0%,
+      $color-divisor-medio   25%,
+      $color-divisor-medio   75%,
+      $color-divisor-fin   100%
+    );
+    margin-top: $espacio-1;
+  }
+
+  @media (max-width: $bp-md) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: $bp-sm) { grid-template-columns: 1fr; }
+}
+
+//TARJETAS ACCIONES
+
+.tarjeta-accion {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radio-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: $espacio-5 $espacio-5 $espacio-5;
+  min-height: 150px;
+  cursor: pointer;
+  text-decoration: none !important;
+  border: none;
+  outline: none;
+
+ 
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  transition: $transicion-resorte;
+
+  &:hover {
+    filter: brightness(1.07);
+    transform: scale(1.015);
+  }
+
+  &:active {
+    transform: translateY(-9px) scale(1.03) !important;
+    filter: brightness(1.0) !important;
+  }
+
+  .envoltorio-icono-accion,
+  .texto-accion,
+  .icono-fondo-accion {
+    position: relative;
+    z-index: 2;
+  }
+
+  .icono-fondo-accion {
+    position: absolute;
+    right: -24px;
+    bottom: -24px;
+    font-size: 140px;
+    opacity: 0.12;
+    filter: blur(2px);
+    z-index: 1;
+    transform: rotate(-15deg);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  //COLORES TARJETAS
+  &.tarjeta-entrega {
+    background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+    box-shadow: $sombra-btn-azul;
+
+    .envoltorio-icono-accion { background: rgba(255,255,255,0.20); color: $color-texto-blanco; }
+    .texto-accion         { color: $color-texto-blanco; }
+
+    &:active { box-shadow: $sombra-btn-azul-activo !important; }
+  }
+
+  &.tarjeta-devolucion {
+    background: linear-gradient(145deg, $color-green-700, $color-green-500);
+    box-shadow: $sombra-btn-verde;
+
+    .envoltorio-icono-accion { background: rgba(255,255,255,0.20); color: $color-texto-blanco; }
+    .texto-accion         { color: $color-texto-blanco; }
+
+    &:active { box-shadow: $sombra-btn-verde-activo !important; }
+  }
+
+  &.tarjeta-perdida {
+    background: linear-gradient(145deg, $color-red-600, $color-red-500);
+    box-shadow: $sombra-btn-rojo;
+
+    .envoltorio-icono-accion { background: rgba(255,255,255,0.20); color: $color-texto-blanco; }
+    .texto-accion         { color: $color-texto-blanco; }
+
+    &:active { box-shadow: $sombra-btn-rojo-activo !important; }
+  }
+
+  &.tarjeta-inventario {
+    background: linear-gradient(145deg, $color-purple-700, $color-purple-500);
+    box-shadow: $sombra-btn-morado;
+
+    .envoltorio-icono-accion { background: rgba(255,255,255,0.20); color: $color-texto-blanco; }
+    .texto-accion         { color: $color-texto-blanco; }
+
+    &:active { box-shadow: $sombra-btn-morado-activo !important; }
+  }
+}
+
+//ICONOS
+.envoltorio-icono-accion {
+  width: 48px;
+  height: 48px;
+  border-radius: $radio-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(2px);
+
+  .icono-accion { font-size: 24px; }
+}
+
+.texto-accion {
+  font-size: $tam-fuente-2xl;
+  font-weight: $peso-negro;
+  letter-spacing: $espaciado-letra-ajustado;
+  line-height: $altura-linea-ajustada;
+  margin-top: $espacio-2;
+}
+
+.seccion-tabla-ordenanza {
+  width: 100%;
+  background: $color-fondo-superficie;
+  border-radius: $radio-xl;
+  border: 1px solid $color-borde-claro;
+  overflow: hidden;
+  box-shadow: $sombra-tarjeta;
+  margin-bottom: 60px;
+
+  margin-top: $espacio-7;
+}
+
+.cabecera-tabla-ordenanza {
+  padding: $espacio-5 $espacio-6;
+  border-bottom: 1px solid $color-borde-defecto;
+  background: $color-fondo-superficie;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: $tam-fuente-lg;
+    font-weight: $peso-negro;
+    color: $color-texto-titulo;
+    margin: 0;
+    letter-spacing: $espaciado-letra-ajustado;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    &::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: $radio-redondo;
+      background: $color-green-700;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.contenedor-tabla-ordenanza {
+  overflow-x: auto;
+  max-height: 480px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar { width: 5px; height: 5px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: $color-divisor-medio;
+    border-radius: $radio-redondo;
+    &:hover { background: $color-texto-suave; }
+  }
+}
+
+
+//TABLA
+.tabla-ordenanza {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+
+  th {
+    background: $color-fondo-sutil;
+    padding: $espacio-3 $espacio-5;
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+    border-bottom: 1px solid $color-borde-defecto;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    white-space: nowrap;
+
+    &:first-child { padding-left: $espacio-6; }
+    &:last-child  { padding-right: $espacio-6; }
+  }
+
+  td {
+    padding: 14px $espacio-5;
+    font-size: $tam-fuente-md;
+    color: $color-texto-cuerpo;
+    border-bottom: 1px solid $color-borde-fila;
+    vertical-align: middle;
+
+    &:first-child {
+      padding-left: $espacio-6;
+      color: $color-texto-titulo;
+      font-weight: $peso-negrita;
+    }
+    &:last-child { padding-right: $espacio-6; }
+
+    &.po-empty-message {
+      text-align: center;
+      padding: 20px;
+    }
+
+    &.celda-usuario {
+      font-weight: 700;
+    }
+
+    &.celda-atenuada {
+      color: #64748b;
+    }
+
+    &.celda-fecha-devuelta {
+      font-style: normal;
+      color: inherit;
+    }
+
+    &.celda-fecha-pendiente {
+      font-style: italic;
+      color: #94a3b8;
+    }
+  }
+
+    tbody tr {
+    transition: $transicion-base;
+
+    &:hover { background: $color-fondo-hover; }
+
+    &:last-child td { border-bottom: none; }
+
+    .po-etiqueta-llave {
+      display: inline-flex;
+      align-items: center;
+      gap: $espacio-1 + 2px;
+      padding: 4px $espacio-3;
+      background: $color-blue-100;
+      color: $color-blue-700;
+      border: 1px solid $color-blue-200;
+      border-radius: $radio-sm;
+      font-weight: $peso-negrita;
+      font-size: $tam-fuente-xs;
+    }
+
+    &.fila-alerta {
+      background-color: rgba(220, 38, 38, 0.12);
+      border-left: 4px solid #dc2626;
+      animation: poOverduePulse 3s infinite;
+
+      &:hover {
+        background-color: rgba(220, 38, 38, 0.18);
+      }
+
+      td {
+        color: #991b1b;
+        font-weight: $peso-negrita;
+
+        &:first-child { color: #7f1d1d; }
+      }
+    }
+  }
+}
+
+// ALERTA DE VENCIMIENTO
+.po-celda-fecha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .icono-vencido {
+    color: #dc2626;
+    font-size: 22px;
+    font-weight: bold;
+    animation: poOverdueFloat 1.5s ease-in-out infinite;
+    cursor: help;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
+  }
+}
+
+.icono-alerta {
+  color: $color-red-600;
+  font-size: 17px;
+  vertical-align: middle;
+}
+
+
+// ESTADO DE LA LLAVE
+.etiqueta-estado-ordenanza {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px $espacio-3;
+  border-radius: $radio-redondo;
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: $radio-redondo;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  &.entrega {
+    background: $color-blue-100;
+    color: $color-blue-700;
+    border: 1px solid $color-blue-200;
+  }
+
+  &.devolucion {
+    background: $color-green-100;
+    color: $color-green-700;
+    border: 1px solid $color-green-200;
+  }
+
+  &.restauracion {
+    background: $color-purple-100;
+    color: $color-purple-700;
+    border: 1px solid $color-purple-200;
+  }
+
+  &.perdida {
+    background: $color-red-100;
+    color: $color-red-700;
+    border: 1px solid $color-red-200;
+  }
+}
+
+//PIE DE TABLA Y BOTON SECUNDARIO
+.pie-tabla-ordenanza {
+  padding: $espacio-4 $espacio-6;
+  background: $color-fondo-sutil;
+  border-top: 1px solid $color-borde-defecto;
+  text-align: center;
+}
+
+.btn-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: $color-fondo-superficie;
+  border: 1.5px solid $color-blue-200;
+  color: $color-blue-700;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-md;
+  font-weight: $peso-negrita;
+  padding: 9px $espacio-6;
+  border-radius: $radio-md;
+  cursor: pointer;
+  transition: $transicion-base;
+
+  &:hover {
+    background: $color-blue-100;
+    border-color: $color-blue-700;
+  }
+
+  &:active {
+    background: $color-blue-700;
+    color: $color-texto-blanco;
+    border-color: $color-blue-700;
+    box-shadow: $sombra-btn-azul;
+    transform: translateY(-2px);
+  }
+}
+
+//ANIMACIONES PARA ALERTAS
+@keyframes poOverdueFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes poOverduePulse {
+  0%, 100% {
+    background-color: rgba(220, 38, 38, 0.12);
+  }
+  50% {
+    background-color: rgba(220, 38, 38, 0.05);
+  }
+}
+

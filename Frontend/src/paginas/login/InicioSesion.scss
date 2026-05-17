@@ -1,0 +1,525 @@
+
+@use '../../../estilos/variables' as *;
+
+* {
+  box-sizing: border-box;
+  font-family: $fuente-base;
+}
+
+
+// Wrapper de página — fondo con geometría animada
+.envoltorio-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #061a3a 0%, #0a2d5c 40%, #0e3d1f 100%);
+  padding: $espacio-6;
+  position: relative;
+  overflow: hidden;
+
+  // --- Capa 1: malla de puntos (SVG inline como data-uri) ---
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // --- Capa 2: aurora difusa ---
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 10% 15%,  rgba(35, 135, 58, 0.22)  0%, transparent 65%),
+      radial-gradient(ellipse 55% 60% at 90% 80%,  rgba(16, 82, 160, 0.30)  0%, transparent 65%),
+      radial-gradient(ellipse 45% 45% at 80% 10%,  rgba(26, 116, 204, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 15% 85%,  rgba(58, 181, 84, 0.16)  0%, transparent 60%),
+      radial-gradient(ellipse 30% 35% at 50% 50%,  rgba(26, 95, 168, 0.10)  0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+    animation: auroraPulse 14s ease-in-out infinite alternate;
+  }
+}
+
+/*
+Pseudo-blobs animados adicionales via elementos generados en JS
+(ver .mancha-fondo más abajo)
+*/
+
+@keyframes auroraPulse {
+  0%   { opacity: 0.75; transform: scale(1)    rotate(0deg); }
+  50%  { opacity: 1;    transform: scale(1.04) rotate(1deg); }
+  100% { opacity: 0.80; transform: scale(0.98) rotate(-1deg); }
+}
+
+/*
+Blobs decorativos flotantes (elementos <span> o <div>
+con clase .mancha-fondo añadidos desde el JSX si se desea,
+o generados con CSS nth-child si se prefiere)
+*/
+
+// Blob superior derecho — azul corporativo
+.mancha-fondo-1,
+.mancha-fondo-2,
+.mancha-fondo-3 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+  z-index: 0;
+}
+
+.mancha-fondo-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16, 82, 160, 0.28) 0%, transparent 70%);
+  top: -160px;
+  right: -120px;
+  animation: blobDrift1 18s ease-in-out infinite alternate;
+}
+
+.mancha-fondo-2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(35, 135, 58, 0.22) 0%, transparent 70%);
+  bottom: -140px;
+  left: -100px;
+  animation: blobDrift2 22s ease-in-out infinite alternate;
+}
+
+.mancha-fondo-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(26, 116, 204, 0.18) 0%, transparent 70%);
+  top: 40%;
+  left: 55%;
+  animation: blobDrift3 16s ease-in-out infinite alternate;
+}
+
+@keyframes blobDrift1 {
+  0%   { transform: translate(0,   0)   scale(1); }
+  100% { transform: translate(-40px, 50px) scale(1.12); }
+}
+
+@keyframes blobDrift2 {
+  0%   { transform: translate(0,   0)   scale(1); }
+  100% { transform: translate(50px, -40px) scale(1.08); }
+}
+
+@keyframes blobDrift3 {
+  0%   { transform: translate(0,    0)    scale(1);    opacity: 0.6; }
+  100% { transform: translate(-30px, 25px) scale(1.15); opacity: 1; }
+}
+
+// Líneas diagonales decorativas — capa de textura
+.lineas-fondo-login {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 200%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.04) 30%,
+      rgba(255, 255, 255, 0.07) 50%,
+      rgba(255, 255, 255, 0.04) 70%,
+      transparent 100%
+    );
+    top: -50%;
+    animation: lineSweep 8s ease-in-out infinite alternate;
+  }
+
+  &::before {
+    left: 28%;
+    transform: rotate(18deg);
+    animation-delay: 0s;
+  }
+
+  &::after {
+    left: 68%;
+    transform: rotate(18deg);
+    animation-delay: 2s;
+  }
+}
+
+@keyframes lineSweep {
+  0%   { opacity: 0.4; transform: rotate(18deg) translateX(0); }
+  100% { opacity: 0.9; transform: rotate(18deg) translateX(20px); }
+}
+
+
+// Tarjeta central — glassmorphism sutil
+.tarjeta-login {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+
+  // Glass: fondo semi-transparente con desenfoque del fondo
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: $radio-xl;
+  padding: $espacio-12 $espacio-10;
+  box-shadow:
+    0 2px 4px  rgba(0, 0, 0, 0.04),
+    0 8px 20px rgba(10, 45, 92, 0.15),
+    0 24px 60px rgba(10, 45, 92, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: loginFadeIn 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes loginFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+// Cabecera — icono + nombre de centro
+.cabecera-login {
+  margin-bottom: $espacio-10;
+  text-align: center;
+  width: 100%;
+}
+
+.logo-icono {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(145deg, $color-blue-900, $color-blue-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto $espacio-5;
+  border-radius: $radio-lg;
+  box-shadow:
+    $sombra-btn-azul,
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  .icono-primario {
+    font-size: 36px;
+    color: #ffffff;
+    font-variation-settings: 'FILL' 1;
+  }
+}
+
+.titulo-principal {
+  font-size: $tam-fuente-2xl;
+  font-weight: $peso-negro;
+  color: $color-texto-titulo;
+  margin: 0 0 $espacio-2;
+  letter-spacing: $espaciado-letra-ajustado;
+  background: linear-gradient(to right, $color-blue-900, $color-blue-700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitulo-principal {
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  color: $color-texto-atenuado;
+  text-transform: uppercase;
+  letter-spacing: $espaciado-letra-amplio;
+  margin: 0;
+}
+
+
+// Formulario
+.formulario-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+}
+
+.error-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $espacio-2;
+  color: $color-red-700;
+  background: $color-red-100;
+  border: 1px solid $color-red-200;
+  padding: $espacio-3 $espacio-4;
+  border-radius: $radio-md;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  animation: loginShake 0.45s ease-in-out;
+}
+
+@keyframes loginShake {
+  0%,  100% { transform: translateX(0); }
+  25%        { transform: translateX(-5px); }
+  75%        { transform: translateX(5px); }
+}
+
+.grupo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-2;
+}
+
+.etiqueta-campo {
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  color: $color-texto-atenuado;
+  text-transform: uppercase;
+  letter-spacing: $espaciado-letra-amplio;
+  padding-left: $espacio-1;
+}
+
+.envoltorio-campo {
+  position: relative;
+  width: 100%;
+
+  .envoltorio-icono {
+    position: absolute;
+    left: $espacio-4;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-texto-suave;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    transition: $transicion-base;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &:focus-within .envoltorio-icono {
+    color: $color-blue-600;
+  }
+}
+
+.campo-entrada {
+  width: 100%;
+  height: 48px;
+  padding: 0 $espacio-12 0 $espacio-12;
+  background: $color-fondo-sutil;
+  border: 1.5px solid $color-borde-defecto;
+  border-radius: $radio-md;
+  color: $color-texto-cuerpo;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-base;
+  font-weight: $peso-regular;
+  outline: none;
+  transition: $transicion-base;
+
+  &::placeholder {
+    color: $color-texto-suave;
+  }
+
+  &:focus {
+    background: $color-fondo-superficie;
+    border-color: $color-blue-500;
+    box-shadow: 0 0 0 4px rgba(26, 116, 204, 0.08);
+  }
+}
+
+.alternar-contrasena {
+  position: absolute;
+  right: $espacio-4;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-texto-suave;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: $espacio-1;
+  border-radius: $radio-xs;
+  transition: $transicion-base;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  &:hover {
+    color: $color-blue-600;
+    background: $color-blue-100;
+  }
+}
+
+
+// Recordarme
+.ayudas-formulario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $espacio-1;
+}
+
+.envoltorio-checkbox {
+  display: flex;
+  align-items: center;
+  gap: $espacio-2;
+  cursor: pointer;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  color: $color-texto-atenuado;
+
+  .checkbox-campo {
+    width: 16px;
+    height: 16px;
+    accent-color: $color-blue-600;
+    cursor: pointer;
+  }
+}
+
+.enlace-recuperar {
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  color: $color-blue-600;
+  text-decoration: none;
+  transition: $transicion-base;
+
+  &:hover {
+    color: $color-blue-700;
+    text-decoration: underline;
+  }
+}
+
+
+// Botón de acceso
+.boton-principal {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: $radio-md;
+  background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+  color: $color-texto-blanco;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-base;
+  font-weight: $peso-negro;
+  cursor: pointer;
+  letter-spacing: $espaciado-letra-amplio;
+  text-transform: uppercase;
+  box-shadow: $sombra-btn-azul;
+  transition: $transicion-resorte;
+  margin-top: $espacio-2;
+  position: relative;
+  overflow: hidden;
+
+  // Shimmer animado al hacer hover
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 100%
+    );
+    transition: left 0.45s ease;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: $sombra-btn-azul-activo;
+
+    &::after {
+      left: 160%;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: $sombra-btn-azul;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    filter: grayscale(0.2);
+    box-shadow: none;
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.icono-relleno {
+  font-variation-settings: 'FILL' 1;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $espacio-2;
+}
+
+.icono-pequeno { font-size: 16px; }
+.icono-medio { font-size: 20px; }
+.icono-grande { font-size: 24px; }
+
+
+// Footer — nota de seguridad
+.pie-login {
+  margin-top: $espacio-8;
+  padding: $espacio-3 $espacio-5;
+  background: $color-fondo-sutil;
+  border-radius: $radio-sm;
+  border: 1px solid $color-borde-defecto;
+  width: 100%;
+}
+
+.texto-pie-login {
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  color: $color-texto-suave;
+  text-transform: uppercase;
+  letter-spacing: $espaciado-letra-amplio;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $espacio-2;
+  margin: 0;
+
+  .material-symbols-outlined {
+    font-size: 14px;
+  }
+}
+
+// Animación de rotación para el icono de carga
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

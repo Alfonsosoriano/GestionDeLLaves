@@ -1,0 +1,452 @@
+
+@use '../../../estilos/variables' as *;
+
+* { font-family: $fuente-base; }
+
+
+// Área principal
+.rp-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: $espacio-5 $espacio-5 $espacio-8;
+  animation: rpFadeIn 0.4s ease-out;
+}
+
+
+// Contenedor centrado
+.rp-contenedor-centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+
+// Tarjeta del formulario
+.rp-tarjeta-formulario {
+  background: $color-fondo-superficie;
+  padding: $espacio-8;
+  border-radius: $radio-xl;
+  box-shadow: $sombra-tarjeta;
+  border: 1px solid $color-borde-claro;
+  border-top: 4px solid $color-red-600;
+  width: 100%;
+  max-width: 560px;
+}
+
+
+// Formulario
+.rp-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+}
+
+.rp-grupo-input {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-2;
+  position: relative;
+
+  label {
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+  }
+}
+
+.rp-input-con-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  > span.material-symbols-outlined {
+    position: absolute;
+    left: $espacio-4;
+    color: $color-texto-suave;
+    font-size: 20px;
+    pointer-events: none;
+    transition: $transicion-rapida;
+    z-index: 1;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px $espacio-10 12px 46px;
+    border: 1.5px solid $color-borde-defecto;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    color: $color-texto-cuerpo;
+    background: $color-fondo-sutil;
+    outline: none;
+    box-sizing: border-box;
+    transition: $transicion-base;
+
+    &::placeholder { color: $color-texto-suave; }
+
+    &:focus {
+      border-color: $color-red-500;
+      background: $color-fondo-superficie;
+      box-shadow: 0 0 0 4px rgba(217, 64, 64, 0.08);
+    }
+  }
+
+  &:focus-within > span.material-symbols-outlined {
+    color: $color-red-600;
+  }
+
+  .rp-cargando-icono {
+    position: absolute;
+    right: $espacio-3;
+    color: $color-red-500;
+    font-size: 20px;
+    animation: rpSpin 1.2s linear infinite;
+    pointer-events: none;
+  }
+
+  .rp-btn-buscar {
+    position: absolute;
+    right: $espacio-2;
+    background: none;
+    border: none;
+    color: $color-blue-600;
+    cursor: pointer;
+    padding: $espacio-1;
+    display: flex;
+    align-items: center;
+    border-radius: $radio-xs;
+    transition: $transicion-rapida;
+
+    &:hover   { background: $color-blue-100; }
+    &:disabled { color: $color-texto-suave; cursor: not-allowed; }
+  }
+}
+
+.rp-resultados-busqueda {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: $color-fondo-superficie;
+  border: 1px solid $color-borde-defecto;
+  border-top: none;
+  border-radius: 0 0 $radio-md $radio-md;
+  z-index: 100;
+  list-style: none;
+  padding: $espacio-1 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: $sombra-lg;
+
+  li {
+    padding: $espacio-3 $espacio-4;
+    border-bottom: 1px solid $color-borde-fila;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: $transicion-rapida;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: $color-fondo-hover; }
+  }
+
+  .rp-fila-info-llave {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-cuerpo;
+
+    strong { color: $color-texto-titulo; }
+  }
+
+  .rp-etiqueta-estado {
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    padding: 2px $espacio-2 + 2px;
+    border-radius: $radio-redondo;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &.estado-disponible {
+      background: $color-green-100;
+      color: $color-green-700;
+      border: 1px solid $color-green-200;
+    }
+    &.estado-prestada {
+      background: $color-blue-100;
+      color: $color-blue-700;
+      border: 1px solid $color-blue-200;
+    }
+    &.estado-perdida {
+      background: $color-red-100;
+      color: $color-red-700;
+      border: 1px solid $color-red-200;
+    }
+  }
+}
+
+.rp-vista-previa-seleccionada {
+  padding: $espacio-5;
+  background: $color-red-50;
+  border: 1.5px dashed $color-red-500;
+  border-radius: $radio-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $espacio-4;
+}
+
+.rp-imagen-vista-previa {
+  background: $color-fondo-superficie;
+  padding: $espacio-5;
+  border-radius: $radio-md;
+  box-shadow: $sombra-sm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $espacio-2;
+  width: 100%;
+
+  svg { max-width: 100%; height: auto; }
+
+  .rp-texto-codigo-barras {
+    font-family: monospace;
+    font-size: $tam-fuente-lg;
+    font-weight: $peso-negro;
+    letter-spacing: 2px;
+    color: $color-texto-titulo;
+  }
+}
+
+.rp-detalles-vista-previa {
+  width: 100%;
+
+  p {
+    margin: $espacio-1 + 2px 0;
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+
+    strong { color: $color-texto-cuerpo; }
+  }
+
+  .estado-disponible { color: $color-green-700; font-weight: $peso-negrita; }
+  .estado-prestada   { color: $color-blue-700;  font-weight: $peso-negrita; }
+  .estado-perdida    { color: $color-red-700;   font-weight: $peso-negrita; }
+}
+
+
+// Banner de mensaje
+.rp-mensaje {
+  display: flex;
+  align-items: center;
+  gap: $espacio-3;
+  padding: $espacio-3 $espacio-4;
+  border-radius: $radio-md;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+
+  &.error {
+    background: $color-red-100;
+    color: $color-red-700;
+    border: 1px solid $color-red-200;
+  }
+
+  &.success {
+    background: $color-green-100;
+    color: $color-green-800;
+    border: 1px solid $color-green-200;
+  }
+}
+
+// Botón de envío — rojo para pérdidas
+.rp-btn-enviar {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: $radio-md;
+  background: linear-gradient(145deg, $color-red-700, $color-red-500);
+  color: $color-texto-blanco;
+  font-family: $fuente-base;
+  font-weight: $peso-negrita;
+  font-size: $tam-fuente-base;
+  cursor: pointer;
+  box-shadow: $sombra-btn-rojo;
+  transition: $transicion-resorte;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: $sombra-btn-rojo-activo;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+    box-shadow: $sombra-btn-rojo;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    filter: none;
+  }
+}
+
+// Sección historial de llaves perdidas
+.rp-historial {
+  width: 100%;
+  max-width: 560px;
+  margin-top: $espacio-8;
+  padding-top: $espacio-8;
+  border-top: 1px solid $color-borde-defecto;
+
+  h2 {
+    font-size: $tam-fuente-xl;
+    font-weight: $peso-negro;
+    color: $color-texto-titulo;
+    letter-spacing: $espaciado-letra-ajustado;
+    margin: 0 0 $espacio-5;
+  }
+
+  .rp-historial-vacio {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+    font-style: italic;
+    font-weight: $peso-negrita;
+  }
+
+  .rp-historial-cargando {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+    font-weight: $peso-negrita;
+  }
+}
+
+// Tabla de historial
+.rp-contenedor-tabla-historial {
+  overflow-x: auto;
+  background: $color-fondo-superficie;
+  border-radius: $radio-lg;
+  border: 1px solid $color-borde-claro;
+  box-shadow: $sombra-tarjeta;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    th {
+      background: $color-fondo-sutil;
+      padding: $espacio-3 $espacio-4;
+      font-size: $tam-fuente-xs;
+      font-weight: $peso-negrita;
+      color: $color-texto-atenuado;
+      text-transform: uppercase;
+      letter-spacing: $espaciado-letra-amplio;
+      border-bottom: 1px solid $color-borde-defecto;
+      white-space: nowrap;
+
+      &:first-child { padding-left: $espacio-5; }
+      &:last-child  { padding-right: $espacio-5; text-align: center; }
+    }
+
+    td {
+      padding: $espacio-3 $espacio-4;
+      font-size: $tam-fuente-sm;
+      color: $color-texto-cuerpo;
+      border-bottom: 1px solid $color-borde-fila;
+      vertical-align: middle;
+
+      &:first-child { padding-left: $espacio-5; font-weight: $peso-negrita; }
+      &:last-child  { padding-right: $espacio-5; text-align: center; }
+    }
+
+    tbody tr {
+      transition: $transicion-base;
+      &:hover      { background: $color-fondo-hover; }
+      &:last-child td { border-bottom: none; }
+    }
+  }
+}
+
+// Botón restaurar dentro de la tabla
+.rp-btn-restaurar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px $espacio-3;
+  background: linear-gradient(145deg, $color-green-700, $color-green-500);
+  color: $color-texto-blanco;
+  border: none;
+  border-radius: $radio-sm;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  cursor: pointer;
+  box-shadow: $sombra-btn-verde;
+  transition: $transicion-base;
+
+  span.material-symbols-outlined { font-size: 16px; }
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: $sombra-btn-verde-activo;
+  }
+}
+
+// Acciones de navegación
+.rp-acciones-navegacion {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: $espacio-8;
+  margin-bottom: $espacio-5;
+  width: 100%;
+}
+
+
+// Botón volver al panel
+.rp-btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: $espacio-2;
+  background: $color-fondo-superficie;
+  color: $color-texto-cuerpo;
+  text-decoration: none;
+  padding: $espacio-2 $espacio-4;
+  border-radius: $radio-sm;
+  border: 1px solid $color-borde-defecto;
+  box-shadow: $sombra-xs;
+  font-family: $fuente-base;
+  font-weight: $peso-negrita;
+  font-size: $tam-fuente-sm;
+  transition: $transicion-base;
+
+  span.material-symbols-outlined { font-size: 20px; }
+
+  &:hover {
+    background: $color-fondo-hover;
+    border-color: $color-borde-fuerte;
+  }
+}
+
+
+// Animaciones
+@keyframes rpSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rpFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

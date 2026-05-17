@@ -1,0 +1,347 @@
+
+@use '../../../estilos/variables' as *;
+
+.pagina-historial {
+  min-height: calc(100vh - 120px);
+  position: relative;
+  animation: hmFadeIn 0.4s ease-out;
+}
+
+.area-principal {
+  flex: 1;
+  min-width: 0;
+
+  .cabecera-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $espacio-6;
+
+    .titulo-cabeceras {
+      h1 {
+        font-size: $tam-fuente-2xl;
+        font-weight: $peso-negro;
+        color: $color-texto-titulo;
+        letter-spacing: $espaciado-letra-ajustado;
+        margin: 0 0 $espacio-1;
+        background: linear-gradient(to right, $color-blue-900, $color-blue-700);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      p {
+        color: $color-texto-atenuado;
+        font-size: $tam-fuente-sm;
+        font-weight: $peso-negrita;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: $espaciado-letra-amplio;
+      }
+    }
+  }
+}
+
+// ── Drawer de detalle
+.fondo-panel-lateral {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 31, 58, 0.50);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: $transicion-base;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .panel-lateral {
+    position: absolute;
+    top: 0;
+    right: -460px;
+    width: 460px;
+    height: 100%;
+    background: $color-fondo-superficie;
+    box-shadow: -10px 0 50px rgba(15, 40, 90, 0.14);
+    transition: right 0.30s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.open .panel-lateral {
+    right: 0;
+  }
+
+  .cabecera-panel {
+    padding: $espacio-10 $espacio-8;
+    background: linear-gradient(135deg, $color-fondo-sutil 0%, $color-blue-50 100%);
+    border-bottom: 1px solid $color-borde-defecto;
+
+    .parte-superior-cabecera {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: $espacio-6;
+
+      .icono-llave-grande {
+        width: 56px;
+        height: 56px;
+        background: $color-fondo-superficie;
+        border: 1px solid $color-borde-fuerte;
+        border-radius: $radio-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: $sombra-md;
+
+        span.material-symbols-outlined {
+          font-size: 30px;
+          color: $color-blue-600;
+        }
+      }
+
+      .btn-cerrar {
+        width: 36px;
+        height: 36px;
+        border-radius: $radio-redondo;
+        border: 1px solid $color-borde-defecto;
+        background: $color-fondo-superficie;
+        color: $color-texto-atenuado;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transicion-base;
+        box-shadow: $sombra-xs;
+
+        span.material-symbols-outlined {
+          font-size: 20px;
+        }
+
+        &:hover {
+          color: $color-red-600;
+          border-color: $color-red-200;
+          background: $color-red-50;
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    h2 {
+      font-size: $tam-fuente-xl;
+      font-weight: $peso-negro;
+      color: $color-texto-titulo;
+      letter-spacing: $espaciado-letra-ajustado;
+      margin: 0 0 $espacio-1;
+    }
+
+    .loc {
+      font-size: $tam-fuente-sm;
+      color: $color-texto-atenuado;
+      margin: 0;
+    }
+  }
+
+  .cuerpo-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: $espacio-8;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: $color-divisor-medio;
+      border-radius: $radio-redondo;
+    }
+
+    section { margin-bottom: $espacio-10; }
+
+    h3 {
+      font-size: $tam-fuente-xs;
+      font-weight: $peso-negrita;
+      color: $color-texto-atenuado;
+      text-transform: uppercase;
+      letter-spacing: $espaciado-letra-amplio;
+      margin-bottom: $espacio-5;
+    }
+
+    .cuadricula-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $espacio-5;
+
+      .elemento-info {
+        display: flex;
+        flex-direction: column;
+        gap: $espacio-1;
+
+        label {
+          font-size: $tam-fuente-xs;
+          font-weight: $peso-negrita;
+          color: $color-texto-atenuado;
+          text-transform: uppercase;
+          letter-spacing: $espaciado-letra-amplio;
+        }
+
+        span {
+          font-size: $tam-fuente-sm;
+          font-weight: $peso-negrita;
+          color: $color-texto-cuerpo;
+        }
+      }
+    }
+
+    .cronologia {
+      display: flex;
+      flex-direction: column;
+
+      .elemento-cronologia {
+        display: flex;
+        gap: $espacio-5;
+        padding-bottom: $espacio-7 + 2px;
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 17px;
+          top: 36px;
+          bottom: 0;
+          width: 2px;
+          border-left: 2px dashed $color-borde-defecto;
+        }
+
+        &:last-child::before { display: none; }
+
+        .marcador-cronologia {
+          width: 36px;
+          height: 36px;
+          border-radius: $radio-redondo;
+          background: $color-fondo-sutil;
+          border: 3px solid $color-fondo-superficie;
+          box-shadow: 0 0 0 1px $color-borde-defecto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          z-index: 1;
+          color: $color-texto-atenuado;
+
+          span.material-symbols-outlined { font-size: 18px; }
+        }
+
+        .contenido-cronologia {
+          display: flex;
+          flex-direction: column;
+          gap: $espacio-1;
+          padding-top: $espacio-1 + 2px;
+
+          .nombre-estado {
+            font-size: $tam-fuente-sm;
+            font-weight: $peso-negro;
+            color: $color-texto-titulo;
+          }
+
+          .fecha {
+            font-size: $tam-fuente-xs;
+            color: $color-texto-atenuado;
+            font-weight: $peso-negrita;
+          }
+
+          .responsable {
+            font-size: $tam-fuente-xs;
+            color: $color-texto-suave;
+            font-style: italic;
+          }
+        }
+
+        &.active {
+          .marcador-cronologia {
+            background: $color-blue-100;
+            color: $color-blue-600;
+            box-shadow: 0 0 0 1px $color-blue-200;
+          }
+          .nombre-estado { color: $color-blue-700; }
+        }
+
+        &.available {
+          .marcador-cronologia {
+            background: $color-green-100;
+            color: $color-green-600;
+            box-shadow: 0 0 0 1px $color-green-200;
+          }
+        }
+      }
+    }
+  }
+}
+
+//Estados específicos de la tabla de movimientos 
+.tabla-historial {
+  .fila-clickeable {
+    cursor: pointer;
+    transition: $transicion-base;
+    &:hover { background: $color-fondo-hover; }
+
+    &.fila-vencida {
+      background-color: rgba(220, 38, 38, 0.12);
+      border-left: 4px solid #dc2626;
+      animation: overduePulse 3s infinite;
+      
+      &:hover { background-color: rgba(220, 38, 38, 0.18); }
+
+      td {
+        color: #991b1b;
+        &.font-bold { color: #7f1d1d; }
+        .texto-atenuado { color: #b91c1c !important; }
+      }
+    }
+  }
+
+  .celda-fecha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .icono-vencido {
+      color: #dc2626;
+      font-size: 22px;
+      font-weight: bold;
+      animation: overdueFloat 1.5s ease-in-out infinite;
+      cursor: help;
+      filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
+    }
+  }
+
+  .etiqueta-llave {
+    display: inline-flex;
+    align-items: center;
+    gap: $espacio-1 + 2px;
+    padding: 4px $espacio-3;
+    background: $color-blue-100;
+    color: $color-blue-700;
+    border: 1px solid $color-blue-200;
+    border-radius: $radio-sm;
+    font-weight: $peso-negrita;
+    font-size: $tam-fuente-xs;
+  }
+}
+
+// Animaciones
+@keyframes hmFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes overdueFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes overduePulse {
+  0%, 100% { background-color: rgba(220, 38, 38, 0.12); }
+  50% { background-color: rgba(220, 38, 38, 0.05); }
+}

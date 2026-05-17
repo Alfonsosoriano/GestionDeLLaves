@@ -1,0 +1,313 @@
+
+@use '../../../estilos/variables' as *;
+
+* { box-sizing: border-box; font-family: $fuente-base; }
+
+
+// Wrapper
+.envoltorio-perfil {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-fondo-pagina;
+}
+
+
+// Área principal
+.ep-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $espacio-8 $espacio-6;
+  animation: epFadeIn 0.4s ease-out;
+}
+
+@keyframes epFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+// Contenedor centrado
+.ep-container {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+}
+
+
+// Tarjeta principal del formulario
+.tarjeta-perfil {
+  background: $color-fondo-superficie;
+  border: 1px solid $color-borde-claro;
+  border-radius: $radio-xl;
+  padding: $espacio-8;
+  box-shadow: $sombra-tarjeta;
+  width: 100%;
+}
+
+.cabecera-tarjeta-perfil {
+  display: flex;
+  align-items: center;
+  gap: $espacio-4;
+  margin-bottom: $espacio-8;
+  padding-bottom: $espacio-5;
+  border-bottom: 1px solid $color-borde-defecto;
+
+  .material-symbols-outlined {
+    font-size: 36px;
+    color: $color-blue-700;
+    font-variation-settings: 'FILL' 1;
+    background: $color-blue-100;
+    padding: $espacio-3;
+    border-radius: $radio-lg;
+  }
+
+  h1 {
+    font-size: $tam-fuente-2xl;
+    font-weight: $peso-negro;
+    color: $color-texto-titulo;
+    margin: 0;
+    letter-spacing: $espaciado-letra-ajustado;
+  }
+
+  p {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+    margin: $espacio-1 0 0;
+  }
+}
+
+
+// Formulario
+.formulario-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-6;
+
+  .fila-perfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $espacio-5;
+
+    @media (max-width: $bp-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.grupo-campo-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-2;
+
+  label {
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+    padding-left: $espacio-1;
+  }
+
+  input {
+    height: 46px;
+    padding: 0 $espacio-4;
+    border: 1.5px solid $color-borde-defecto;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    color: $color-texto-cuerpo;
+    background: $color-fondo-sutil;
+    transition: $transicion-base;
+
+    &::placeholder { color: $color-texto-suave; }
+
+    &:focus {
+      outline: none;
+      background: $color-fondo-superficie;
+      border-color: $color-blue-500;
+      box-shadow: 0 0 0 4px rgba(26, 116, 204, 0.08);
+    }
+  }
+}
+
+.ep-select {
+  height: 46px;
+  padding: 0 $espacio-4;
+  border: 1.5px solid $color-borde-defecto;
+  border-radius: $radio-md;
+  font-family: $fuente-base;
+  font-size: $tam-fuente-base;
+  color: $color-texto-cuerpo;
+  background: $color-fondo-superficie;
+  transition: $transicion-base;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: $color-blue-500;
+    box-shadow: 0 0 0 4px rgba(26, 116, 204, 0.08);
+  }
+}
+
+.texto-divisor {
+  display: flex;
+  align-items: center;
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negro;
+  color: $color-texto-suave;
+  text-transform: uppercase;
+  letter-spacing: $espaciado-letra-amplio;
+  margin: $espacio-2 0 $espacio-4;
+
+  &::before, &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $color-borde-defecto;
+  }
+
+  &::before { margin-right: $espacio-4; }
+  &::after { margin-left: $espacio-4; }
+}
+
+
+// Caja de seguridad (cambio de contraseña)
+.caja-seguridad {
+  background: $color-fondo-sutil;
+  padding: $espacio-6;
+  border-radius: $radio-lg;
+  border: 1px solid $color-borde-defecto;
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+
+  .cabecera-caja-perfil {
+    display: flex;
+    align-items: center;
+    gap: $espacio-3;
+
+    .material-symbols-outlined {
+      color: $color-blue-600;
+      font-size: 22px;
+    }
+
+    h3 {
+      font-size: $tam-fuente-base;
+      font-weight: $peso-negro;
+      color: $color-texto-titulo;
+      margin: 0;
+    }
+  }
+
+  .info-caja-perfil {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+    margin: -$espacio-3 0 $espacio-1;
+  }
+
+  input { background: $color-fondo-superficie !important; }
+
+  .error-contrasena {
+    display: flex;
+    align-items: center;
+    gap: $espacio-2;
+    background: $color-red-100;
+    color: $color-red-700;
+    padding: $espacio-3 $espacio-4;
+    border-radius: $radio-sm;
+    border: 1px solid $color-red-200;
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negrita;
+    animation: epShake 0.4s ease-in-out;
+
+    .material-symbols-outlined { font-size: 16px; }
+  }
+}
+
+@keyframes epShake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-4px); }
+  75%       { transform: translateX(4px); }
+}
+
+
+// Acciones del formulario
+.acciones-perfil {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: $espacio-4;
+  border-top: 1px solid $color-borde-defecto;
+
+  .btn-guardar {
+    display: inline-flex;
+    align-items: center;
+    gap: $espacio-2;
+    height: 46px;
+    padding: 0 $espacio-8;
+    background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+    color: $color-texto-blanco;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    font-weight: $peso-negro;
+    letter-spacing: $espaciado-letra-amplio;
+    text-transform: uppercase;
+    border: none;
+    border-radius: $radio-md;
+    cursor: pointer;
+    box-shadow: $sombra-btn-azul;
+    transition: $transicion-resorte;
+
+    .material-symbols-outlined { font-size: 20px; }
+
+    &:hover {
+      filter: brightness(1.07);
+      transform: translateY(-2px);
+      box-shadow: $sombra-btn-azul-activo;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+
+// Botón volver
+.acciones-nav-perfil {
+  display: flex;
+  justify-content: flex-start;
+
+  .btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: $espacio-2;
+    padding: $espacio-2 $espacio-4;
+    background: $color-fondo-superficie;
+    color: $color-texto-cuerpo;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negrita;
+    border: 1px solid $color-borde-defecto;
+    border-radius: $radio-sm;
+    cursor: pointer;
+    box-shadow: $sombra-xs;
+    transition: $transicion-base;
+    text-decoration: none;
+
+    .material-symbols-outlined { font-size: 18px; }
+
+    &:hover {
+      background: $color-fondo-sutil;
+      border-color: $color-blue-200;
+    }
+
+    &:active {
+      background: $color-blue-50;
+    }
+  }
+}

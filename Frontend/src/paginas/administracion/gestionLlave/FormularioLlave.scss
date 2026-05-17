@@ -1,0 +1,480 @@
+/*
+FormularioLlave.scss
+Usa el sistema de diseño global: _variables.scss
+*/
+@use '../../../../estilos/variables' as *;
+
+* { font-family: $fuente-base; }
+
+
+// Grid principal: formulario (izq) + vista previa (der)
+.cuadricula-formulario-llave {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: $espacio-6;
+  align-items: start;
+
+  @media (max-width: $bp-lg) { grid-template-columns: 1fr; }
+}
+
+
+// Tarjeta contenedora (formulario)
+.tarjeta-llave {
+  background: $color-fondo-superficie;
+  border: 1px solid $color-borde-claro;
+  border-radius: $radio-xl;
+  padding: $espacio-6;
+  box-shadow: $sombra-tarjeta;
+  overflow: hidden;
+}
+
+.titulo-tarjeta-llave {
+  margin: 0 0 $espacio-6;
+  font-size: $tam-fuente-lg;
+  font-weight: $peso-negro;
+  color: $color-texto-titulo;
+  letter-spacing: $espaciado-letra-ajustado;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-bottom: $espacio-5;
+  border-bottom: 1px solid $color-borde-defecto;
+
+  // Punto azul — igual que titulo-tarjeta-usuario y cabecera-tabla
+  &::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: $radio-redondo;
+    background: $color-blue-700;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+}
+
+
+// Error del formulario
+.error-formulario-llave {
+  background: $color-red-100;
+  color: $color-red-700;
+  padding: $espacio-3 $espacio-4;
+  border-radius: $radio-sm;
+  border: 1px solid $color-red-200;
+  margin-bottom: $espacio-5;
+  display: flex;
+  align-items: center;
+  gap: $espacio-3;
+  font-weight: $peso-negrita;
+  font-size: $tam-fuente-base;
+  animation: fl-shake 0.45s ease-in-out;
+
+  span.material-symbols-outlined { font-size: 20px; flex-shrink: 0; }
+}
+
+@keyframes fl-shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}
+
+
+// Formulario
+.formulario-llave {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-4;
+}
+
+.fila-campo-llave {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $espacio-4;
+
+  @media (max-width: $bp-sm) { grid-template-columns: 1fr; }
+
+  .full-width { grid-column: span 2; }
+}
+
+.grupo-campo-llave {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-1 + 2px;
+
+  &.full-width { grid-column: span 2; }
+
+  label {
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+  }
+
+  input, select {
+    height: 46px;
+    padding: 0 $espacio-4;
+    border: 1.5px solid $color-borde-defecto;
+    border-radius: $radio-md;
+    background: $color-fondo-superficie;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    color: $color-texto-cuerpo;
+    transition: $transicion-base;
+    box-sizing: border-box;
+    width: 100%;
+
+    &::placeholder { color: $color-texto-suave; }
+
+    &:focus {
+      outline: none;
+      border-color: $color-blue-700;
+      box-shadow: 0 0 0 3px rgba(16, 82, 160, 0.10);
+    }
+
+    &[readonly] {
+      background: $color-fondo-sutil;
+      color: $color-texto-atenuado;
+      cursor: not-allowed;
+      border-style: dashed;
+    }
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236a85a8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-color: $color-fondo-superficie;
+    padding-right: 40px;
+  }
+}
+
+// Input con botón "Generar" a la derecha
+.fl-envoltorio-campo-with-btn {
+  display: flex;
+  gap: $espacio-2;
+  width: 100%;
+
+  input { flex: 1; min-width: 0; }
+
+  .btn-generar {
+    flex-shrink: 0;
+    height: 46px;
+    padding: 0 $espacio-4;
+    background: $color-fondo-superficie;
+    border: 1.5px dashed $color-blue-200;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negrita;
+    color: $color-blue-700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $espacio-2;
+    transition: $transicion-base;
+    white-space: nowrap;
+
+    span.material-symbols-outlined { font-size: 20px; }
+
+    &:hover {
+      background: $color-blue-100;
+      border-color: $color-blue-700;
+      border-style: solid;
+    }
+
+    &:active {
+      background: $color-blue-700;
+      color: $color-texto-blanco;
+    }
+  }
+}
+
+
+// Acciones del formulario
+.acciones-formulario-llave {
+  display: flex;
+  justify-content: flex-end;
+  gap: $espacio-3;
+  padding-top: $espacio-5;
+  border-top: 1px solid $color-borde-defecto;
+
+  @media (max-width: $bp-sm) {
+    flex-direction: column;
+  }
+
+  .btn-cancelar {
+    flex: 1;
+    height: 46px;
+    background: $color-fondo-sutil;
+    color: $color-texto-cuerpo;
+    border: 1.5px solid $color-borde-defecto;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    font-weight: $peso-negrita;
+    cursor: pointer;
+    transition: $transicion-base;
+    white-space: nowrap;
+
+    &:hover {
+      background: $color-fondo-hover;
+      border-color: $color-texto-suave;
+    }
+  }
+
+  .btn-guardar {
+    flex: 1;
+    height: 46px;
+    background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+    color: $color-texto-blanco;
+    border: none;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    font-weight: $peso-negro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $espacio-2;
+    cursor: pointer;
+    box-shadow: $sombra-btn-azul;
+    transition: $transicion-resorte;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+
+    span.material-symbols-outlined { font-size: 20px; }
+
+    &:hover {
+      filter: brightness(1.07);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      box-shadow: $sombra-btn-azul-activo;
+      transform: translateY(0) scale(0.98);
+    }
+  }
+
+  .btn-eliminar {
+    flex: 1;
+    height: 46px;
+    background: linear-gradient(145deg, $color-red-600, $color-red-500);
+    color: $color-texto-blanco;
+    border: none;
+    border-radius: $radio-md;
+    font-family: $fuente-base;
+    font-size: $tam-fuente-base;
+    font-weight: $peso-negro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $espacio-2;
+    cursor: pointer;
+    box-shadow: $sombra-btn-rojo;
+    transition: $transicion-resorte;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+
+    span.material-symbols-outlined { font-size: 20px; }
+
+    &:hover {
+      filter: brightness(1.07);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      box-shadow: $sombra-btn-rojo-activo;
+      transform: translateY(0) scale(0.98);
+    }
+  }
+}
+
+
+// Columna derecha: vista previa de la llave
+.barra-lateral-llave {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+}
+
+.tarjeta-vista-previa-llave {
+  background: $color-fondo-superficie;
+  border: 1px solid $color-borde-claro;
+  border-radius: $radio-xl;
+  padding: $espacio-6 $espacio-5;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: $sombra-tarjeta;
+}
+
+// Acento de color en la cabecera
+.acento-vista-previa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, $color-blue-800, $color-blue-500);
+  flex-shrink: 0;
+}
+
+// Círculo con icono de llave
+.icono-vista-previa {
+  width: 80px;
+  height: 80px;
+  border-radius: $radio-redondo;
+  background: linear-gradient(145deg, $color-blue-100, $color-fondo-sutil);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $espacio-7 0 $espacio-6;
+  border: 3px solid $color-fondo-superficie;
+  box-shadow: $sombra-md;
+
+  span.material-symbols-outlined {
+    font-size: 40px;
+    color: $color-blue-700;
+    font-variation-settings: 'FILL' 1;
+  }
+}
+
+// Texto de vista previa
+.info-vista-previa {
+  text-align: center;
+  margin-bottom: $espacio-5;
+  width: 100%;
+
+  .etiqueta-vista-previa {
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+    color: $color-texto-suave;
+    margin: 0 0 $espacio-2;
+  }
+
+  .nombre-vista-previa {
+    font-size: $tam-fuente-xl;
+    font-weight: $peso-negro;
+    color: $color-blue-700 !important;  // el JSX tiene style inline, reforzamos
+    margin: 0 0 $espacio-2;
+    word-break: break-word;
+    line-height: $altura-linea-ajustada;
+    letter-spacing: $espaciado-letra-ajustado;
+  }
+
+  .ubicacion-vista-previa {
+    font-size: $tam-fuente-md;
+    color: $color-texto-atenuado;
+    margin: 0;
+    font-weight: $peso-negrita;
+  }
+}
+
+// Badge de estado — mismo sistema que po-badge / gl-chip
+.etiqueta-estado-llave {
+  display: inline-flex;
+  align-items: center;
+  gap: $espacio-2;
+  padding: 5px 14px;
+  border-radius: $radio-redondo;
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+  margin: $espacio-1 0 $espacio-5;
+  letter-spacing: $espaciado-letra-amplio;
+
+  .punto-estado {
+    width: 7px;
+    height: 7px;
+    border-radius: $radio-redondo;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  &.disponible {
+    background: $color-green-100;
+    color: $color-green-700;
+    border: 1px solid $color-green-200;
+  }
+
+  &.prestada,
+  &.en_uso {
+    background: $color-blue-100;
+    color: $color-blue-700;
+    border: 1px solid $color-blue-200;
+  }
+
+  &.perdida {
+    background: $color-red-100;
+    color: $color-red-700;
+    border: 1px solid $color-red-200;
+  }
+
+  &.reservada {
+    background: $color-amber-100;
+    color: $color-amber-700;
+    border: 1px solid $color-amber-200;
+  }
+}
+
+// Zona del código de barras
+.codigo-barras-vista-previa {
+  width: 100%;
+  background: $color-fondo-sutil;
+  padding: $espacio-4 $espacio-5;
+  border-radius: $radio-lg;
+  border: 1px solid $color-borde-defecto;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $espacio-2;
+
+  .contenedor-imagen-barras {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  svg {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+  }
+
+  .texto-codigo-barras {
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negro;
+    letter-spacing: 3px;
+    color: $color-texto-titulo;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+// Placeholder mientras no hay código
+div[style*="ESPERANDO"] {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-texto-suave;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  letter-spacing: $espaciado-letra-amplio;
+}
+
+.placeholder-codigo-barras {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-texto-suave;
+  font-size: $tam-fuente-xs;
+  font-weight: $peso-negrita;
+}

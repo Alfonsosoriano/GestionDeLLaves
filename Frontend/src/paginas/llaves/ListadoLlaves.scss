@@ -1,0 +1,466 @@
+
+@use '../../../estilos/variables' as *;
+
+* { font-family: $fuente-base; }
+
+
+// Contenedor principal
+.lk-container {
+  padding: $espacio-6;
+  animation: lkFadeIn 0.4s ease-out;
+}
+
+
+// Cabecera — buscador + contador
+.cabecera-inventario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $espacio-6;
+  gap: $espacio-6;
+
+  // Buscador
+  .caja-busqueda-inventario {
+    flex: 1;
+    max-width: 460px;
+    position: relative;
+
+    span.material-symbols-outlined {
+      position: absolute;
+      left: $espacio-4;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $color-texto-suave;
+      font-size: 20px;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 11px $espacio-4 11px 46px;
+      border: 1.5px solid $color-borde-defecto;
+      border-radius: $radio-md;
+      font-family: $fuente-base;
+      font-size: $tam-fuente-sm;
+      color: $color-texto-cuerpo;
+      background: $color-fondo-superficie;
+      outline: none;
+      box-sizing: border-box;
+      box-shadow: $sombra-xs;
+      transition: $transicion-base;
+
+      &::placeholder { color: $color-texto-suave; }
+
+      &:focus {
+        border-color: $color-blue-500;
+        box-shadow: 0 0 0 4px rgba(26, 116, 204, 0.08);
+      }
+    }
+
+    &:focus-within span.material-symbols-outlined {
+      color: $color-blue-600;
+    }
+  }
+
+  // Contador de resultados
+  .lk-count {
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    background: $color-fondo-sutil;
+    border: 1px solid $color-borde-defecto;
+    padding: $espacio-2 $espacio-4;
+    border-radius: $radio-redondo;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+  }
+}
+
+
+// Grid de tarjetas
+.cuadricula-llaves {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: $espacio-4;
+
+  @media (max-width: $bp-md) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: $espacio-3;
+  }
+}
+
+
+// Tarjeta de llave
+.tarjeta-inventario {
+  background: $color-fondo-superficie;
+  border-radius: $radio-lg;
+  padding: $espacio-5;
+  border: 1px solid $color-borde-claro;
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-3;
+  position: relative;
+  overflow: hidden;
+  box-shadow: $sombra-sm;
+  transition: $transicion-resorte;
+
+  //Icono decorativo
+  &::before {
+    content: 'vpn_key';
+    font-family: 'Material Symbols Outlined';
+    font-weight: 300;
+    font-style: normal;
+    font-size: 100px;
+    line-height: 1;
+    position: absolute;
+    right: -16px;
+    bottom: -16px;
+    color: $color-blue-200;
+    opacity: 0.35;
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-15deg);
+    z-index: 0;
+    transition: $transicion-base;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.60) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: $sombra-lg;
+    border-color: $color-blue-200;
+
+    &::before { opacity: 0.50; transform: rotate(-10deg) scale(1.05); }
+  }
+
+  //Icono pequeño superior
+  .icono-tarjeta-inventario {
+    width: 38px;
+    height: 38px;
+    background: $color-blue-100;
+    border: 1px solid $color-blue-200;
+    color: $color-blue-600;
+    border-radius: $radio-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+
+    span.material-symbols-outlined { font-size: 20px; }
+  }
+
+  //Contenido textual
+  .contenido-tarjeta-inventario {
+    position: relative;
+    z-index: 1;
+
+    h3 {
+      font-size: $tam-fuente-sm;
+      font-weight: $peso-negro;
+      color: $color-texto-titulo;
+      margin: 0 0 $espacio-2;
+      line-height: $altura-linea-ajustada;
+      letter-spacing: $espaciado-letra-ajustado;
+    }
+
+    // Badge de estado
+    .estado-inventario {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px $espacio-3;
+      border-radius: $radio-redondo;
+      font-size: $tam-fuente-xs;
+      font-weight: $peso-negrita;
+      text-transform: uppercase;
+      letter-spacing: $espaciado-letra-amplio;
+
+      // Punto indicador
+      &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: $radio-redondo;
+        background: currentColor;
+        flex-shrink: 0;
+      }
+
+      &.disponible {
+        background: $color-green-100;
+        color: $color-green-700;
+        border: 1px solid $color-green-200;
+      }
+
+      &.prestada {
+        background: $color-blue-100;
+        color: $color-blue-700;
+        border: 1px solid $color-blue-200;
+      }
+
+      &.perdida {
+        background: $color-red-100;
+        color: $color-red-700;
+        border: 1px solid $color-red-200;
+      }
+    }
+  }
+
+  //Acción
+  .acciones-tarjeta-inventario {
+    margin-top: auto;
+    padding-top: $espacio-3;
+    border-top: 1px solid $color-borde-fila;
+    position: relative;
+    z-index: 1;
+
+    .btn-vista-previa {
+      width: 100%;
+      padding: 8px $espacio-3;
+      border-radius: $radio-sm;
+      border: 1.5px solid $color-borde-defecto;
+      background: $color-fondo-superficie;
+      color: $color-texto-cuerpo;
+      font-family: $fuente-base;
+      font-weight: $peso-negrita;
+      font-size: $tam-fuente-xs;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $espacio-2;
+      cursor: pointer;
+      transition: $transicion-base;
+
+      span.material-symbols-outlined { font-size: 17px; }
+
+      &:hover {
+        background: $color-blue-100;
+        border-color: $color-blue-200;
+        color: $color-blue-700;
+      }
+    }
+  }
+}
+
+// Estado vacío / carga
+.lk-loading,
+.lk-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: $espacio-10 0;
+  font-size: $tam-fuente-md;
+  font-weight: $peso-negrita;
+  color: $color-texto-atenuado;
+}
+
+
+// Modal de vista previa
+.fondo-modal-inventario {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 31, 58, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: lkFadeIn 0.20s ease-out;
+}
+
+.lk-modal {
+  width: 90%;
+  max-width: 500px;
+  background: $color-fondo-superficie;
+  border-radius: $radio-xl;
+  border: 1px solid $color-borde-claro;
+  box-shadow: $sombra-lg;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: lkSlideUp 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  // Cabecera del modal
+  .cabecera-modal-inventario {
+    padding: $espacio-5 $espacio-8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $color-borde-defecto;
+
+    h2 {
+      font-size: $tam-fuente-lg;
+      font-weight: $peso-negro;
+      color: $color-texto-titulo;
+      letter-spacing: $espaciado-letra-ajustado;
+      margin: 0;
+    }
+
+    .btn-cerrar {
+      width: 34px;
+      height: 34px;
+      border-radius: $radio-redondo;
+      border: 1px solid $color-borde-defecto;
+      background: $color-fondo-sutil;
+      color: $color-texto-atenuado;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: $transicion-base;
+
+      span.material-symbols-outlined { font-size: 19px; }
+
+      &:hover {
+        background: $color-red-100;
+        border-color: $color-red-200;
+        color: $color-red-600;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  //Cuerpo del modal
+  .cuerpo-modal-inventario {
+    padding: $espacio-8;
+
+    .info-vista-previa-inventario {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $espacio-5;
+      margin-bottom: $espacio-8;
+
+      .detalle-vista-previa-inventario {
+        display: flex;
+        flex-direction: column;
+        gap: $espacio-1;
+
+        label {
+          font-size: $tam-fuente-xs;
+          font-weight: $peso-negrita;
+          color: $color-texto-atenuado;
+          text-transform: uppercase;
+          letter-spacing: $espaciado-letra-amplio;
+        }
+
+        span {
+          font-size: $tam-fuente-sm;
+          font-weight: $peso-negrita;
+          color: $color-texto-cuerpo;
+        }
+
+        .texto-estado {
+          &.disponible { color: $color-green-700; }
+          &.prestada   { color: $color-blue-700;  }
+          &.perdida    { color: $color-red-700;   }
+        }
+      }
+    }
+
+    // Zona del código de barras
+    .contenedor-codigo-inventario {
+      background: $color-fondo-sutil;
+      border: 2px dashed $color-borde-defecto;
+      border-radius: $radio-lg;
+      padding: $espacio-8;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .etiqueta-codigo-inventario {
+        font-size: $tam-fuente-xs;
+        font-weight: $peso-negrita;
+        color: $color-texto-atenuado;
+        text-transform: uppercase;
+        letter-spacing: $espaciado-letra-amplio;
+        margin-bottom: $espacio-5;
+      }
+
+      .envoltorio-codigo-inventario {
+        background: $color-fondo-superficie;
+        padding: $espacio-4;
+        border-radius: $radio-md;
+        box-shadow: $sombra-sm;
+        margin-bottom: $espacio-4;
+      }
+
+      .subtexto-codigo-inventario {
+        font-size: $tam-fuente-xs;
+        color: $color-texto-atenuado;
+        margin: 0;
+      }
+    }
+  }
+
+  //Pie del modal
+  .pie-modal-inventario {
+    padding: $espacio-5 $espacio-8;
+    background: $color-fondo-sutil;
+    border-top: 1px solid $color-borde-defecto;
+    display: flex;
+    gap: $espacio-3;
+
+    button {
+      flex: 1;
+      padding: 11px $espacio-4;
+      border-radius: $radio-md;
+      font-family: $fuente-base;
+      font-weight: $peso-negrita;
+      font-size: $tam-fuente-sm;
+      cursor: pointer;
+      transition: $transicion-base;
+    }
+
+    .btn-secundario {
+      border: 1.5px solid $color-borde-defecto;
+      background: $color-fondo-superficie;
+      color: $color-texto-cuerpo;
+
+      &:hover {
+        background: $color-fondo-hover;
+        border-color: $color-borde-fuerte;
+      }
+    }
+
+    .btn-imprimir {
+      border: none;
+      background: linear-gradient(145deg, $color-blue-700, $color-blue-500);
+      color: $color-texto-blanco;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $espacio-2;
+      box-shadow: $sombra-btn-azul;
+
+      span.material-symbols-outlined { font-size: 19px; }
+
+      &:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+        box-shadow: $sombra-btn-azul-activo;
+      }
+    }
+  }
+}
+
+
+// Animaciones
+@keyframes lkFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lkSlideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}

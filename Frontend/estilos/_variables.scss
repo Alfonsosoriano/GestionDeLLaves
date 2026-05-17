@@ -1,0 +1,199 @@
+// ============================================================
+// _variables.scss — Sistema de diseño global
+// IES Oretania · Gestión de Llaves
+// Importar en cada módulo: @use '../../styles/variables' as *;
+// ============================================================
+
+
+// ------------------------------------------------------------
+// Tipografía — Lato (Google Fonts)
+// ------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
+
+$fuente-base:      'Lato', sans-serif;
+$tam-fuente-xs:   11px;
+$tam-fuente-sm:   12px;
+$tam-fuente-md:   13px;
+$tam-fuente-base: 14px;
+$tam-fuente-lg:   15px;
+$tam-fuente-xl:   18px;
+$tam-fuente-2xl:  22px;
+
+$peso-regular: 400;
+$peso-negrita:    700;
+$peso-negro:   900;
+
+$altura-linea-ajustada:  1.2;
+$altura-linea-normal: 1.5;
+$altura-linea-suelta:  1.7;
+
+$espaciado-letra-ajustado: -0.3px;
+$espaciado-letra-amplio:   0.9px;
+
+
+// ------------------------------------------------------------
+// Paleta principal — extraída del logo IES Oretania
+// ------------------------------------------------------------
+
+// Azul corporativo
+$color-blue-900:   #0a2d5c;
+$color-blue-800:   #0e3d72;
+$color-blue-700:   #1052a0;  // ← color principal de marca
+$color-blue-600:   #1a5fa8;
+$color-blue-500:   #1a74cc;
+$color-blue-200:   #b8d0f0;
+$color-blue-100:   #e8f0fb;
+$color-blue-50:    #f0f6ff;
+
+// Verde corporativo
+$color-green-900:  #0f3a1c;
+$color-green-800:  #1a5228;
+$color-green-700:  #23873a;  // ← color secundario de marca
+$color-green-600:  #2d9e46;
+$color-green-500:  #3ab554;
+$color-green-200:  #b6dfc0;
+$color-green-100:  #edf7ef;
+$color-green-50:   #f4fbf5;
+
+// Rojo — pérdidas / alertas críticas
+$color-red-900:    #4a1010;
+$color-red-800:    #7a1a1a;
+$color-red-700:    #991b1b;
+$color-red-600:    #b52a2a;
+$color-red-500:    #d94040;
+$color-red-300:    #d94040;
+$color-red-200:    #f5c2be;
+$color-red-100:    #fdecea;
+$color-red-50:     #fff5f5;
+
+// Púrpura — inventario / secundario
+$color-purple-900: #1e0a4a;
+$color-purple-800: #2e1278;
+$color-purple-700: #4a1fa8;
+$color-purple-600: #5b28c8;
+$color-purple-500: #6d3ed4;
+$color-purple-200: #c4aaf5;
+$color-purple-100: #ede8fb;
+$color-purple-50:  #f5f2ff;
+
+// Ámbar — advertencias / pendientes
+$color-amber-700:  #92400e;
+$color-amber-600:  #b45309;
+$color-amber-500:  #d97706;
+$color-amber-200:  #fcd9a0;
+$color-amber-100:  #fef3e2;
+$color-amber-50:   #fffbf0;
+
+
+// ------------------------------------------------------------
+// Neutros — textos, fondos, bordes
+// ------------------------------------------------------------
+$color-texto-titulo:   #0f1f3a;
+$color-texto-cuerpo:      #2a3d5a;
+$color-texto-atenuado:     #6a85a8;
+$color-texto-suave:     #9ab0c8;
+$color-texto-blanco:     #ffffff;
+
+$color-fondo-pagina:        #eef2f7;   // Fondo global — gris azulado claro
+$color-fondo-superficie:     #ffffff;   // Tarjetas, tablas, modales
+$color-fondo-sutil:      #f7fafc;   // Cabeceras de tabla, filas alternas
+$color-fondo-hover:       #f8fafd;   // Hover de filas
+
+$color-borde-claro:   rgba(0, 0, 0, 0.06);
+$color-borde-defecto: #edf1f7;
+$color-borde-fila:     #f0f4f9;
+$color-borde-fuerte:  rgba(26, 95, 168, 0.20);
+
+// Separador decorativo (usado entre secciones)
+$color-divisor-inicio:  transparent;
+$color-divisor-medio:    #c8d4e4;
+$color-divisor-oscuro:   #cbd5e1;
+$color-divisor-fin:    transparent;
+
+
+// ------------------------------------------------------------
+// Sombras — escala de profundidad coherente
+// ------------------------------------------------------------
+$sombra-xs:     0 1px 2px rgba(0, 0, 0, 0.04);
+$sombra-sm:     0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+$sombra-md:     0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.03);
+$sombra-tarjeta:   0 2px 4px rgba(0, 0, 0, 0.03),
+                0 4px 6px rgba(0, 0, 0, 0.04),
+                0 12px 28px rgba(15, 40, 90, 0.09);   // Tabla elevada
+$sombra-lg:     0 10px 24px rgba(15, 40, 90, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+
+// Sombras de color para botones principales
+$sombra-btn-azul:      0 8px 20px rgba(16, 82, 160, 0.38), 0 2px 6px rgba(16, 82, 160, 0.20);
+$sombra-btn-azul-activo:  0 22px 48px rgba(16, 82, 160, 0.58), 0 6px 16px rgba(16, 82, 160, 0.32);
+
+$sombra-btn-verde:     0 8px 20px rgba(35, 135, 58, 0.38), 0 2px 6px rgba(35, 135, 58, 0.20);
+$sombra-btn-verde-activo: 0 22px 48px rgba(35, 135, 58, 0.58), 0 6px 16px rgba(35, 135, 58, 0.32);
+
+$sombra-btn-rojo:       0 8px 20px rgba(181, 42, 42, 0.38), 0 2px 6px rgba(181, 42, 42, 0.20);
+$sombra-btn-rojo-activo:   0 22px 48px rgba(181, 42, 42, 0.58), 0 6px 16px rgba(181, 42, 42, 0.32);
+
+$sombra-btn-morado:    0 8px 20px rgba(74, 31, 168, 0.38), 0 2px 6px rgba(74, 31, 168, 0.20);
+$sombra-btn-morado-activo:0 22px 48px rgba(74, 31, 168, 0.58), 0 6px 16px rgba(74, 31, 168, 0.32);
+
+
+// ------------------------------------------------------------
+// Radios de borde
+// ------------------------------------------------------------
+$radio-xs:    6px;
+$radio-sm:    8px;
+$radio-md:    10px;
+$radio-lg:    14px;
+$radio-xl:    18px;
+$radio-2xl:   24px;
+$radio-redondo:  999px;
+
+
+// ------------------------------------------------------------
+// Espaciado — escala uniforme
+// ------------------------------------------------------------
+$espacio-1:   4px;
+$espacio-2:   8px;
+$espacio-3:   12px;
+$espacio-4:   16px;
+$espacio-5:   20px;
+$espacio-6:   24px;
+$espacio-7:   28px;
+$espacio-8:   32px;
+$espacio-10:  40px;
+$espacio-12:  48px;
+
+
+// ------------------------------------------------------------
+// Transiciones estándar
+// ------------------------------------------------------------
+$transicion-rapida:   all 0.15s ease;
+$transicion-base:   all 0.20s ease;
+$transicion-resorte: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    box-shadow 0.22s ease,
+                    filter 0.18s ease;
+
+
+// ------------------------------------------------------------
+// Breakpoints responsive
+// ------------------------------------------------------------
+$bp-sm:  576px;
+$bp-md:  768px;
+$bp-lg:  992px;
+$bp-xl:  1200px;
+$bp-2xl: 1400px;
+
+
+// ------------------------------------------------------------
+// CSS Custom Properties — Layout Ordenanza
+// ------------------------------------------------------------
+:root {
+  --ol-primary:        #0f172a;
+  --ol-accent:         #3b82f6;
+  --ol-accent-soft:    #eff6ff;
+  --ol-bg:             #f8fafc;
+  --ol-surface:        rgba(255, 255, 255, 0.8);
+  --ol-border:         rgba(226, 232, 240, 0.8);
+  --ol-text:           #1e293b;
+  --ol-texto-atenuado: #64748b;
+  --ol-header-height:  80px;
+}

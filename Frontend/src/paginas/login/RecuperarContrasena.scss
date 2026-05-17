@@ -1,0 +1,211 @@
+@use '../../../estilos/variables' as *;
+
+.rp-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $color-blue-900 0%, $color-blue-800 100%);
+  padding: $espacio-5;
+}
+
+.rp-card {
+  width: 100%;
+  max-width: 420px;
+  background: $color-fondo-superficie;
+  border-radius: $radio-2xl;
+  padding: $espacio-10;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: rpFadeIn 0.5s ease-out;
+}
+
+.rp-header {
+  text-align: center;
+  margin-bottom: $espacio-8;
+
+  .logo-icono {
+    width: 64px;
+    height: 64px;
+    background: $color-blue-100;
+    color: $color-blue-700;
+    border-radius: $radio-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto $espacio-5;
+
+    span { font-size: 32px; }
+  }
+
+  .titulo {
+    font-size: $tam-fuente-xl;
+    font-weight: $peso-negro;
+    color: $color-texto-titulo;
+    margin: 0 0 $espacio-1;
+    letter-spacing: $espaciado-letra-ajustado;
+  }
+
+  .subtitulo {
+    font-size: $tam-fuente-sm;
+    color: $color-texto-atenuado;
+    font-weight: $peso-negrita;
+    text-transform: uppercase;
+    letter-spacing: $espaciado-letra-amplio;
+  }
+}
+
+.rp-error-message {
+  background: $color-red-100;
+  color: $color-red-700;
+  padding: $espacio-4;
+  border-radius: $radio-lg;
+  margin-bottom: $espacio-6;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  display: flex;
+  align-items: center;
+  gap: $espacio-3;
+  animation: rpShake 0.4s ease-in-out;
+
+  span { font-size: 18px; }
+}
+
+.rp-info-text {
+  font-size: $tam-fuente-sm;
+  color: $color-texto-cuerpo;
+  text-align: center;
+  margin-bottom: $espacio-6;
+  line-height: 1.5;
+}
+
+.rp-question-box {
+  background: $color-fondo-sutil;
+  padding: $espacio-5;
+  border-radius: $radio-lg;
+  border: 1px solid $color-borde-claro;
+  margin-bottom: $espacio-6;
+
+  .etiqueta-pregunta {
+    display: block;
+    font-size: $tam-fuente-xs;
+    font-weight: $peso-negrita;
+    color: $color-texto-atenuado;
+    text-transform: uppercase;
+    margin-bottom: $espacio-1;
+  }
+
+  .texto-pregunta {
+    font-size: $tam-fuente-md;
+    font-weight: $peso-negrita;
+    color: $color-texto-titulo;
+    margin: 0;
+  }
+}
+
+.rp-form {
+  display: flex;
+  flex-direction: column;
+  gap: $espacio-5;
+
+  .grupo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: $espacio-2;
+
+    label {
+      font-size: $tam-fuente-xs;
+      font-weight: $peso-negrita;
+      color: $color-texto-atenuado;
+      text-transform: uppercase;
+    }
+  }
+
+  .envoltorio-campo {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    span {
+      position: absolute;
+      left: $espacio-4;
+      color: $color-texto-suave;
+      font-size: 20px;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 $espacio-4 0 44px;
+      border: 2px solid $color-borde-defecto;
+      border-radius: $radio-lg;
+      font-size: $tam-fuente-sm;
+      transition: $transicion-base;
+
+      &:focus {
+        border-color: $color-blue-500;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      }
+    }
+  }
+}
+
+.rp-button {
+  height: 52px;
+  background: $color-blue-600;
+  color: white;
+  border: none;
+  border-radius: $radio-lg;
+  font-size: $tam-fuente-md;
+  font-weight: $peso-negrita;
+  cursor: pointer;
+  transition: $transicion-base;
+  margin-top: $espacio-2;
+
+  &:hover { background: $color-blue-700; transform: translateY(-1px); }
+  &:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+}
+
+.rp-button-secondary {
+  background: transparent;
+  color: $color-texto-atenuado;
+  border: none;
+  font-size: $tam-fuente-sm;
+  font-weight: $peso-negrita;
+  cursor: pointer;
+  margin-top: $espacio-2;
+  
+  &:hover { color: $color-texto-titulo; }
+}
+
+.rp-footer {
+  margin-top: $espacio-8;
+  padding-top: $espacio-6;
+  border-top: 1px solid $color-borde-claro;
+  text-align: center;
+
+  .enlace-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: $espacio-2;
+    color: $color-blue-600;
+    text-decoration: none;
+    font-size: $tam-fuente-sm;
+    font-weight: $peso-negrita;
+
+    span { font-size: 18px; }
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+@keyframes rpFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rpShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
