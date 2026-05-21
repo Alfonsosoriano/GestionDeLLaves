@@ -102,6 +102,7 @@ const FormularioUsuario = () => {
         codigoBarras: datosFormulario.codigoBarras,
         password: datosFormulario.password,
         preguntaSeguridad: datosFormulario.preguntaSeguridad,
+        respuestaSeguridad: datosFormulario.responseSeguridad,
         responseSeguridad: datosFormulario.responseSeguridad
       };
 

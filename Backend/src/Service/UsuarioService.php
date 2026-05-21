@@ -77,8 +77,8 @@ class UsuarioService
         if (isset($datos['preguntaSeguridad'])) {
             $usuario->setPreguntaSeguridad($datos['preguntaSeguridad']);
         }
-        if (!empty(trim($datos['respuestaSeguridad'] ?? ''))) {
-            $this->establecerRespuestaSeguridad($usuario, $datos['respuestaSeguridad']);
+        if (!empty(trim($datos['respuestaSeguridad'] ?? $datos['responseSeguridad'] ?? ''))) {
+            $this->establecerRespuestaSeguridad($usuario, $datos['respuestaSeguridad'] ?? $datos['responseSeguridad']);
         }
 
         $this->establecerContrasena($usuario, $datos['password']);
@@ -115,8 +115,8 @@ class UsuarioService
         if (isset($datos['preguntaSeguridad'])) {
             $usuario->setPreguntaSeguridad($datos['preguntaSeguridad']);
         }
-        if (!empty(trim($datos['respuestaSeguridad'] ?? ''))) {
-            $this->establecerRespuestaSeguridad($usuario, $datos['respuestaSeguridad']);
+        if (!empty(trim($datos['respuestaSeguridad'] ?? $datos['responseSeguridad'] ?? ''))) {
+            $this->establecerRespuestaSeguridad($usuario, $datos['respuestaSeguridad'] ?? $datos['responseSeguridad']);
         }
 
         if (!empty(trim($datos['newPassword'] ?? ''))) {

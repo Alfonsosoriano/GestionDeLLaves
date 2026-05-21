@@ -23,7 +23,7 @@ const RecuperarPassword = () => {
   const [paso, setPaso] = useState(1);
   const [usuario, setUsuario] = useState('');
   const [pregunta, setPregunta] = useState('');
-  const [response, setRespuesta] = useState('');
+  const [respuesta, setRespuesta] = useState('');
   const [nuevaPassword, setNuevaPassword] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
   const [cargando, setCargando] = useState(false);
@@ -64,7 +64,7 @@ const RecuperarPassword = () => {
     try {
       await api.post('/api/recuperar-contrasena/verificar', {
         usuario,
-        response,
+        respuesta,
         nuevaPassword
       });
       
@@ -132,14 +132,14 @@ const RecuperarPassword = () => {
             </div>
 
             <div className="grupo-formulario">
-              <label htmlFor="response">Respuesta</label>
+              <label htmlFor="respuesta">Respuesta</label>
               <div className="envoltorio-campo">
                 <span className="material-symbols-outlined">quiz</span>
                 <input
                   type="password"
-                  id="response"
-                  placeholder="Escriba su response"
-                  value={response}
+                  id="respuesta"
+                  placeholder="Escriba su respuesta"
+                  value={respuesta}
                   onChange={(e) => setRespuesta(e.target.value)}
                   required
                 />

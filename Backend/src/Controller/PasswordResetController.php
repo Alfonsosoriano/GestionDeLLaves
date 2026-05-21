@@ -48,8 +48,12 @@ class PasswordResetController extends AbstractController
     {
         $datos = json_decode($request->getContent(), true);
 
+        if (!is_array($datos)) {
+            return $this->json(['error' => 'Datos de solicitud inválidos.'], Response::HTTP_BAD_REQUEST);
+        }
+
         $nombreUsuario = $datos['usuario'] ?? null;
-        $respuesta = $datos['respuesta'] ?? null;
+        $respuesta = $datos['respuesta'] ?? $datos['response'] ?? null;
         $nuevaPassword = $datos['nuevaPassword'] ?? null;
 
         if (!$nombreUsuario || !$respuesta || !$nuevaPassword) {

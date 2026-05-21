@@ -100,6 +100,7 @@ const EditarPerfil = () => {
         usuario: datosFormulario.usuario,
         email: datosFormulario.email,
         preguntaSeguridad: datosFormulario.preguntaSeguridad,
+        respuestaSeguridad: datosFormulario.responseSeguridad,
         responseSeguridad: datosFormulario.responseSeguridad
       };
 
